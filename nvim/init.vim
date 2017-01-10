@@ -152,6 +152,9 @@ let g:gitgutter_max_signs = 5000
 let g:gitgutter_sign_column_always = 1
 let g:gitgutter_realtime = 0
 
+" Indent guides
+let g:indent_guides_enable_on_vim_startup = 1
+
 " True color (24-bit)
 set termguicolors
 
