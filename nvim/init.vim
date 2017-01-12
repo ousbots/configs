@@ -134,7 +134,9 @@ execute pathogen#infect()
 
 " Enable colorscheme
 set background=dark
-colorscheme base16-monokai
+" colorscheme base16-ir-black
+colorscheme base16-isotope
+" colorscheme base16-monokai
 " colorscheme base16-bright
 " colorscheme jellybeans
 " let g:solarized_termcolors=256
@@ -154,7 +156,7 @@ let g:gitgutter_realtime = 0
 
 " Indent guides
 let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_color_change_percent = 5
+let g:indent_guides_color_change_percent = 8
 
 " True color (24-bit)
 set termguicolors
