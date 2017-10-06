@@ -2,14 +2,21 @@
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
+
 -- Widget and layout library
 local wibox = require("wibox")
+
 -- Theme handling library
 local beautiful = require("beautiful")
+
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
+
+-- Battery widget
+local battery_widget = require("battery-widget")
+
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -39,6 +46,7 @@ end
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(awful.util.get_themes_dir() .. "zenburn/theme.lua")
+-- beautiful.init("theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "termite"
@@ -54,9 +62,9 @@ modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
+    awful.layout.suit.max,
     awful.layout.suit.tile.bottom,
     awful.layout.suit.fair.horizontal,
-    awful.layout.suit.max,
     awful.layout.suit.floating,
     -- awful.layout.suit.floating,
     -- awful.layout.suit.tile,
@@ -121,6 +129,9 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 -- {{{ Wibar
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
+
+-- Create a battery widget
+battery = battery_widget({adapter="BAT0", listen=true})
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = awful.util.table.join(
@@ -220,6 +231,7 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             mykeyboardlayout,
             wibox.widget.systray(),
+            battery,
             mytextclock,
             s.mylayoutbox,
         },
