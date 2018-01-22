@@ -15,7 +15,7 @@ local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
 
 -- Battery widget
-local battery_widget = require("battery-widget")
+--local battery_widget = require("battery-widget")
 
 
 -- {{{ Error handling
@@ -124,14 +124,14 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- }}}
 
 -- Keyboard map indicator and switcher
-mykeyboardlayout = awful.widget.keyboardlayout()
+--mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
 -- Create a textclock widget
-mytextclock = wibox.widget.textclock()
+mytextclock = wibox.widget.textclock("%d/%m %H:%M")
 
 -- Create a battery widget
-battery = battery_widget({adapter="BAT0", listen=true})
+--battery = battery_widget({adapter="BAT0", listen=true})
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = awful.util.table.join(
@@ -229,9 +229,9 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            mykeyboardlayout,
+            --mykeyboardlayout,
             wibox.widget.systray(),
-            battery,
+            --battery,
             mytextclock,
             s.mylayoutbox,
         },
