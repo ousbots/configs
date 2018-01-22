@@ -1,0 +1,5 @@
+---
+# Based on LLVM style with modifications
+BasedOnStyle: LLVM
+IndentWidth: 4
+---
