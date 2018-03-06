@@ -37,6 +37,7 @@ if dein#load_state(expand('~/.config/nvim/dein'))
     " Syntax
 	"call dein#add('rust-lang/rust.vim')
     call dein#add('sheerun/vim-polyglot')
+    call dein#add('ntpeters/vim-better-whitespace')
 
 	call dein#end()
 	call dein#save_state()
@@ -85,8 +86,11 @@ set mat=2
 
 " Colorscheme
 set termguicolors
-set background=dark
-colorscheme base16-isotope
+set background=light
+"colorscheme base16-isotope
+"colorscheme base16-tomorrow
+"colorscheme base16-cupcake
+colorscheme base16-summerfruit-light
 "colorscheme molokai
 
 " Clipboard
