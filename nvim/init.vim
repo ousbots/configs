@@ -19,8 +19,10 @@ if dein#load_state(expand('~/.config/nvim/dein'))
 	call dein#add('Shougo/denite.nvim')
 	call dein#add('Shougo/deoplete.nvim')
     call dein#add('jakedouglas/exuberant-ctags')
-    call dein#add('vim-syntastic/syntastic')
+    "call dein#add('vim-syntastic/syntastic')
+    call dein#add('w0rp/ale')
     call dein#add('farmergreg/vim-lastplace')
+    call dein#add('KorySchneider/vim-trim')
 
     " UI
 	call dein#add('vim-airline/vim-airline')
@@ -38,6 +40,7 @@ if dein#load_state(expand('~/.config/nvim/dein'))
 	"call dein#add('rust-lang/rust.vim')
     call dein#add('sheerun/vim-polyglot')
     call dein#add('ntpeters/vim-better-whitespace')
+    call dein#add('fatih/vim-go')
 
 	call dein#end()
 	call dein#save_state()
@@ -54,6 +57,9 @@ endif
 """"""""""""""""""""""""""
 " Configuration Settings "
 """"""""""""""""""""""""""
+
+" Display filename in titlebar
+set title
 
 " Set tabs
 set tabstop=4
@@ -86,12 +92,19 @@ set mat=2
 
 " Colorscheme
 set termguicolors
-set background=light
+set background=dark
+"colorscheme base16-outrun-dark
+"colorscheme base16-black-metal-bathory
+colorscheme base16-chalk
+"colorscheme molokai
 "colorscheme base16-isotope
 "colorscheme base16-tomorrow
 "colorscheme base16-cupcake
-colorscheme base16-summerfruit-light
-"colorscheme molokai
+"colorscheme base16-summerfruit-light
+"colorscheme base16-harmonic-light
+"colorscheme base16-material-lighter
+"colorscheme base16-one-light
+"colorscheme base16-shapeshifter
 
 " Clipboard
 set clipboard+=unnamedplus
@@ -100,10 +113,10 @@ set clipboard+=unnamedplus
 set lazyredraw
 
 " Key mappings
-map <F7> :TagbarToggle<CR>
+map <C-t> :TagbarToggle<CR>
 map <F8> :TagbarOpenAutoClose<CR>
-map <F9> :NERDTreeToggle<CR>
-map <F10> :Bufferlist<CR>
+map <C-n> :NERDTreeToggle<CR>
+map <C-b> :Bufferlist<CR>
 
 
 """""""""""""""""""""""""
@@ -121,16 +134,32 @@ let g:gitgutter_realtime = 0
 let g:gitgutter_eager = 0
 
 
-" Syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" ALE (syntastic async replacement)
+let g:ale_sign_column_always = 1
+let g:ale_set_loclist = 0
+let g:airline#extensions#ale#enabled = 1
 
-let g:syntastic_cpp_compiler_options = "-std=c++17 -Wall -Werror -Wextra -pedantic"
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_lock_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+
+
+" Syntastic
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_lock_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
+"let g:syntastic_cpp_compiler_options = "-std=c++17 -Wall -Werror -Wextra -pedantic"
+"let g:syntastic_cpp_config_file = ".cpp_includes"
+
+" Go stuff
+"let g:syntastic_go_checkers = ['golint', 'govet', 'gometalinter']
+"let g:syntastic_go_gometalinter_args = ['--disable-all', '--enable=errcheck']
+"let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['-o'] }
+"let g:go_list_type = "quickfix"
 
 
 """""""""""""""""""
@@ -138,4 +167,4 @@ let g:syntastic_check_on_wq = 0
 """""""""""""""""""
 
 " Update plugins on start
-autocmd VimEnter * call dein#update()
+"autocmd VimEnter * call dein#update()
