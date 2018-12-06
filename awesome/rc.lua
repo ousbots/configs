@@ -14,9 +14,6 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
 
--- Battery widget
---local battery_widget = require("battery-widget")
-
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -45,11 +42,11 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init(awful.util.get_themes_dir() .. "zenburn/theme.lua")
--- beautiful.init("theme.lua")
+-- beautiful.init(awful.util.get_themes_dir() .. "zenburn/theme.lua")
+beautiful.init("/home/tim/.config/awesome/zenburn/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "termite"
+terminal = "alacritty"
 editor = os.getenv("EDITOR") or "nvim"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -62,9 +59,9 @@ modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-    awful.layout.suit.max,
     awful.layout.suit.tile.bottom,
-    awful.layout.suit.fair.horizontal,
+    awful.layout.suit.tile.top,
+    awful.layout.suit.max,
     awful.layout.suit.floating,
     -- awful.layout.suit.floating,
     -- awful.layout.suit.tile,
@@ -129,9 +126,6 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- {{{ Wibar
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock("%d/%m %H:%M")
-
--- Create a battery widget
---battery = battery_widget({adapter="BAT0", listen=true})
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = awful.util.table.join(
@@ -231,7 +225,7 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             --mykeyboardlayout,
             wibox.widget.systray(),
-            --battery,
+            require("battery-widget"){},
             mytextclock,
             s.mylayoutbox,
         },
@@ -560,3 +554,11 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
+
+-- Autostart compliance
+local xresources_name = "awesome.started"
+local xresources = awful.util.pread("xrdb -query")
+if not xresources:match(xresources_name) then
+    awful.util.spawn_with_shell("xrdb -merge <<< " .. "'" .. xresources_name .. ":true'")
+    os.execute("dex --environment Awesome --autostart --search-paths $XDG_CONFIG_HOME/autostart")
+end
