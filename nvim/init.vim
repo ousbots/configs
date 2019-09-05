@@ -20,7 +20,7 @@ if dein#load_state(expand('~/.config/nvim/dein'))
 	call dein#add('Shougo/deoplete.nvim')
     call dein#add('jakedouglas/exuberant-ctags')
     "call dein#add('vim-syntastic/syntastic')
-    call dein#add('w0rp/ale')
+    call dein#add('dense-analysis/ale')
     call dein#add('farmergreg/vim-lastplace')
     call dein#add('KorySchneider/vim-trim')
 
@@ -37,7 +37,7 @@ if dein#load_state(expand('~/.config/nvim/dein'))
     call dein#add('tomasr/molokai')
 
     " Syntax
-	"call dein#add('rust-lang/rust.vim')
+	call dein#add('rust-lang/rust.vim')
     call dein#add('sheerun/vim-polyglot')
     call dein#add('ntpeters/vim-better-whitespace')
     call dein#add('fatih/vim-go')
@@ -62,10 +62,11 @@ endif
 set title
 
 " Set tabs
+set softtabstop=4
 set tabstop=4
 set shiftwidth=4
 set smarttab
-set expandtab
+"set expandtab
 
 " Backup and history settings
 set nobackup
@@ -93,9 +94,10 @@ set mat=2
 " Colorscheme
 set termguicolors
 set background=dark
+colorscheme base16-gruvbox-dark-pale
+"colorscheme base16-chalk
 "colorscheme base16-outrun-dark
 "colorscheme base16-black-metal-bathory
-colorscheme base16-chalk
 "colorscheme molokai
 "colorscheme base16-isotope
 "colorscheme base16-tomorrow
@@ -139,6 +141,9 @@ let g:ale_sign_column_always = 1
 let g:ale_set_loclist = 0
 let g:airline#extensions#ale#enabled = 1
 
+let g:ale_linters = {'python': ['flake8','mypy']}
+let g:ale_python_flake8_options = '--ignore=E501'
+
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
@@ -168,3 +173,6 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 " Update plugins on start
 "autocmd VimEnter * call dein#update()
+
+" Fix overriding tabstop WTF?!
+autocmd FileType rust setlocal tabstop=4
