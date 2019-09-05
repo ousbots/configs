@@ -4,7 +4,7 @@
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
 # set by alacritty it self.
-env:
+# env:
   # TERM env customization.
   #
   # If this property is not set, alacritty will set it to xterm-256color.
@@ -12,7 +12,7 @@ env:
   # Note that some xterm terminfo databases don't declare support for italics.
   # You can verify this by checking for the presence of `smso` and `sitm` in
   # `infocmp xterm-256color`.
-  TERM: xterm-256color
+  # TERM: xterm-256color
 
 window:
   # Window dimensions in character columns and lines
@@ -29,9 +29,16 @@ window:
     x: 0
     y: 0
 
+  # Spread additional padding evenly around the terminal content
+  dynamic_padding: false
+
   # Window decorations
-  # Setting this to false will result in window without borders and title bar.
-  decorations: true
+  #   - full: Borders and title bar
+  #   - none: Neither borders nor title bar
+  decorations: full
+
+  # Start maximized.
+  startup_mode: Maximized
 
 scrolling:
   # How many lines of scrollback to keep,
@@ -57,10 +64,14 @@ scrolling:
   auto_scroll: false
 
 # Display tabs using this many cells (changes require restart)
+# Spaces per Tab (changes require restart)
+#
+# This setting defines the width of a tab in cells
+#
+# Some applications, like Emacs, rely on knowing about the width of a tab.
+# To prevent unexpected behavior in these applications, it's also required to
+# change the `it` value in terminfo when altering this setting
 tabspaces: 4
-
-# When true, bold text is drawn using the bright variant of colors.
-draw_bold_text_with_bright_colors: true
 
 # Font configuration (changes require restart)
 #
@@ -120,19 +131,47 @@ font:
   # screens and make reading text a little easier.
   # On X11 it is possible to change the DPI for each instance of alacritty by using
   # `WINIT_HIDPI_FACTOR=1.0 alacritty` to scale the font.
-  scale_with_dpi: true
+  # scale_with_dpi: true
 
   # OS X only: use thin stroke font rendering. Thin strokes are suitable
   # for retina displays, but for non-retina you probably want this set to
   # false.
-  use_thin_strokes: false
+  # use_thin_strokes: false
 
-# Should display the render timer
-render_timer: false
+# When true, bold text is drawn using the bright variant of colors.
+draw_bold_text_with_bright_colors: true
 
-# Use custom cursor colors. If true, display the cursor in the cursor.foreground
-# and cursor.background colors, otherwise invert the colors of the cursor.
-custom_cursor_colors: false
+# Colors (Gruvbox dark)
+colors:
+  # Default colors
+  primary:
+    # hard contrast: background = '0x1d2021'
+    background: '0x282828'
+    # soft contrast: background = '0x32302f'
+    foreground: '0xebdbb2'
+
+  # Normal colors
+  normal:
+    black:   '0x282828'
+    red:     '0xcc241d'
+    green:   '0x98971a'
+    yellow:  '0xd79921'
+    blue:    '0x458588'
+    magenta: '0xb16286'
+    cyan:    '0x689d6a'
+    white:   '0xa89984'
+
+  # Bright colors
+  bright:
+    black:   '0x928374'
+    red:     '0xfb4934'
+    green:   '0xb8bb26'
+    yellow:  '0xfabd2f'
+    blue:    '0x83a598'
+    magenta: '0xd3869b'
+    cyan:    '0x8ec07c'
+    white:   '0xebdbb2'
+
 
 ## # Colors (iTerm 2 default theme)
 ## colors:
@@ -163,34 +202,34 @@ custom_cursor_colors: false
 ##    cyan:    '0x99faf2'
 ##    white:   '0xffffff'
 
-# Colors (Snazzy)
-colors:
-  # Default colors
-  primary:
-    background: '0x282a36'
-    foreground: '0xeff0eb'
-
-  # Normal colors
-  normal:
-    black:   '0x282a36'
-    red:     '0xff5c57'
-    green:   '0x5af78e'
-    yellow:  '0xf3f99d'
-    blue:    '0x57c7ff'
-    magenta: '0xff6ac1'
-    cyan:    '0x9aedfe'
-    white:   '0xf1f1f0'
-
-  # Bright colors
-  bright:
-    black:   '0x686868'
-    red:     '0xff5c57'
-    green:   '0x5af78e'
-    yellow:  '0xf3f99d'
-    blue:    '0x57c7ff'
-    magenta: '0xff6ac1'
-    cyan:    '0x9aedfe'
-    white:   '0xf1f1f0'
+## # Colors (Snazzy)
+## colors:
+##   # Default colors
+##   primary:
+##     background: '0x282a36'
+##     foreground: '0xeff0eb'
+##
+##   # Normal colors
+##   normal:
+##     black:   '0x282a36'
+##     red:     '0xff5c57'
+##     green:   '0x5af78e'
+##     yellow:  '0xf3f99d'
+##     blue:    '0x57c7ff'
+##     magenta: '0xff6ac1'
+##     cyan:    '0x9aedfe'
+##     white:   '0xf1f1f0'
+##
+##   # Bright colors
+##   bright:
+##     black:   '0x686868'
+##     red:     '0xff5c57'
+##     green:   '0x5af78e'
+##     yellow:  '0xf3f99d'
+##     blue:    '0x57c7ff'
+##     magenta: '0xff6ac1'
+##     cyan:    '0x9aedfe'
+##     white:   '0xf1f1f0'
 
 ## # Colors (Darktooth)
 ## colors:
@@ -511,6 +550,37 @@ colors:
 ##     cyan:    '0x427b58'
 ##     white:   '0x3c3836'
 
+## # Colors (Gruvbox dark)
+## colors:
+##   # Default colors
+##   primary:
+##     # hard contrast: background = '0x1d2021'
+##     background: '0x282828'
+##     # soft contrast: background = '0x32302f'
+##     foreground: '0xebdbb2'
+##
+##   # Normal colors
+##   normal:
+##     black:   '0x282828'
+##     red:     '0xcc241d'
+##     green:   '0x98971a'
+##     yellow:  '0xd79921'
+##     blue:    '0x458588'
+##     magenta: '0xb16286'
+##     cyan:    '0x689d6a'
+##     white:   '0xa89984'
+##
+##   # Bright colors
+##   bright:
+##     black:   '0x928374'
+##     red:     '0xfb4934'
+##     green:   '0xb8bb26'
+##     yellow:  '0xfabd2f'
+##     blue:    '0x83a598'
+##     magenta: '0xd3869b'
+##     cyan:    '0x8ec07c'
+##     white:   '0xebdbb2'
+
 ## # Colors (Pencil Light)
 ## colors:
 ##   # Default Colors
@@ -643,7 +713,7 @@ colors:
 #
 visual_bell:
   animation: EaseOutExpo
-  duration: 4
+  duration: 100
 
 # Background opacity
 background_opacity: 1.0
@@ -675,23 +745,31 @@ mouse:
   double_click: { threshold: 300 }
   triple_click: { threshold: 300 }
 
+  # If this is `true`, the cursor is temporarily hidden when typing.
+  hide_when_typing: true
+
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>"
 
+  # When set to 'true', selected text will be copied to both the primary and
+  # the selection clipboard. Otherwise, it will only be copied to the seelction
+  # clipboard.
+  save_to_clipboard: true
+
 dynamic_title: true
 
-hide_cursor_when_typing: false
+cursor:
+  # Style of the cursor
+  #
+  # Values for 'cursor_style':
+  # - Block
+  # - Underline
+  # - Beam
+  style: Block
 
-# Style of the cursor
-#
-# Values for 'cursor_style':
-# - Block
-# - Underline
-# - Beam
-cursor_style: Block
-
-# Whether the cursor should be a hollow block on window focus loss
-unfocused_hollow_cursor: true
+  # If this is 'true', the cursor will be rendered as ahollow box when the
+  # window is not focused
+  unfocused_hollow: true
 
 # Live config reload (changes require restart)
 live_config_reload: true
