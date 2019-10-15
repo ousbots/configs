@@ -1,4 +1,4 @@
 function l
-	ls -h --color $argv
+	ls -h -G $argv
 end
 
