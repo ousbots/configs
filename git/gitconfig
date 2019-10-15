@@ -1,35 +1,35 @@
 [alias]
-    # Create a new branch and check it out
-    newb = checkout -b
+	# Create a new branch and check it out
+	newb = checkout -b
 
-    # History log with a graph
-    graph = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all
+	# History log with a graph
+	graph = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all
 
-    # Current branch name. Used in other aliases.
-    branch-name = "!git rev-parse --abbrev-ref HEAD"
+	# Current branch name. Used in other aliases.
+	branch-name = "!git rev-parse --abbrev-ref HEAD"
 
-    # Push the current branch to origin and track upstream.
-    publish = "!git push -u origin $(git branch-name)"
+	# Push the current branch to origin and track upstream.
+	publish = "!git push -u origin $(git branch-name)"
 
-    # Delete the current branch from upstream.
-    unpublish = "!git push origin :$(git branch-name)"
+	# Delete the current branch from upstream.
+	unpublish = "!git push origin :$(git branch-name)"
 
-    # Force push the local branch
-    forcepush = "!git push -f origin $(git branch-name)"
+	# Force push the local branch
+	forcepush = "!git push -f origin $(git branch-name)"
 
-    # Span of commits in a merge from a given merge commit. Used in aother aliases.
-    merge-span = "!f() { echo $(git log -1 $2 --merges --pretty=format:%P | cut -d' ' -f1)$1$(git log -1 $2 --merges --pretty=format:%P | cut -d' ' -f2); }; f"
+	# Span of commits in a merge from a given merge commit. Used in aother aliases.
+	merge-span = "!f() { echo $(git log -1 $2 --merges --pretty=format:%P | cut -d' ' -f1)$1$(git log -1 $2 --merges --pretty=format:%P | cut -d' ' -f2); }; f"
 
-    # Show changes introduced in a merge.
-    merge-diff = "!git diff `git merge-span ... $1`"
+	# Show changes introduced in a merge.
+	merge-diff = "!git diff `git merge-span ... $1`"
 
-    # Show the log of commits introduced in a merge
-    merge-log = "!git log `git merge-span ... $1`"
+	# Show the log of commits introduced in a merge
+	merge-log = "!git log `git merge-span ... $1`"
 
 [user]
-	email = dev@sourbone.net
+	email = tim@pex.com
 	name = Tim Ousborne
 
 [core]
 	editor = nvim
-    pager = less
+	pager = less
