@@ -1,31 +1,33 @@
 set nocompatible
 
+let g:python_host_prog="/usr/local/bin/python3"
+
 " Dein package manager
 let g:dein_repo = 'https://github.com/Shougo/dein.vim.git'
-let g:dein_dir = '~/.config/nvim/dein/repos/github.com/Shuogo/dein.vim'
+let g:dein_dir = '~/.cache/dein'
+let g:dein_install_dir = '~/.cache/dein/repos/github.com/Shuogo/dein/vim'
 
-if empty(glob(g:dein_dir))
-	exec 'silent !mkdir -p '.g:dein_dir
-	exec '!git clone '.g:dein_repo' '.g:dein_dir
+if empty(glob(g:dein_install_dir))
+	exec 'silent !mkdir -p '.g:dein_install_dir
+	exec '!git clone '.g:dein_repo' '.g:dein_install_dir
 endif
 
-exec 'set runtimepath^='.g:dein_dir
+exec 'set runtimepath+='.g:dein_install_dir
 
-if dein#load_state(expand('~/.config/nvim/dein'))
-	call dein#begin(expand('~/.config/nvim/dein'))
+if dein#load_state(''.g:dein_dir)
+	call dein#begin(''.g:dein_dir)
+
+	" Dein tools
+	call dein#add(''.g:dein_install_dir)
+	call dein#add('Shougo/deoplete.nvim')
 
     " Utilities
-	call dein#add('Shougo/dein.vim')
-	call dein#add('Shougo/denite.nvim')
-	call dein#add('Shougo/deoplete.nvim')
-    call dein#add('jakedouglas/exuberant-ctags')
-    "call dein#add('vim-syntastic/syntastic')
     call dein#add('dense-analysis/ale')
     call dein#add('farmergreg/vim-lastplace')
     call dein#add('KorySchneider/vim-trim')
 
     " UI
-	call dein#add('vim-airline/vim-airline')
+	"call dein#add('vim-airline/vim-airline')
     call dein#add('scrooloose/nerdtree')
     call dein#add('majutsushi/tagbar')
     call dein#add('airblade/vim-gitgutter')
@@ -94,7 +96,8 @@ set mat=2
 " Colorscheme
 set termguicolors
 set background=dark
-colorscheme base16-gruvbox-dark-pale
+colorscheme base16-monokai
+"colorscheme base16-gruvbox-dark-pale
 "colorscheme base16-chalk
 "colorscheme base16-outrun-dark
 "colorscheme base16-black-metal-bathory
@@ -109,7 +112,7 @@ colorscheme base16-gruvbox-dark-pale
 "colorscheme base16-shapeshifter
 
 " Clipboard
-set clipboard+=unnamedplus
+"set clipboard+=unnamedplus
 
 " Optimization
 set lazyredraw
@@ -135,36 +138,19 @@ let g:gitgutter_max_signs = 1000
 let g:gitgutter_realtime = 0
 let g:gitgutter_eager = 0
 
+" Airline configuration
+"let g:airline_extensions = []
 
-" ALE (syntastic async replacement)
+" ALE (async language server)
 let g:ale_sign_column_always = 1
 let g:ale_set_loclist = 0
-let g:airline#extensions#ale#enabled = 1
+"let g:airline#extensions#ale#enabled = 1
 
-let g:ale_linters = {'python': ['flake8','mypy']}
-let g:ale_python_flake8_options = '--ignore=E501'
+"let g:ale_linters = {'python': ['flake8','mypy']}
+"let g:ale_python_flake8_options = '--ignore=E501'
 
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
-
-
-" Syntastic
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_lock_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
-"let g:syntastic_cpp_compiler_options = "-std=c++17 -Wall -Werror -Wextra -pedantic"
-"let g:syntastic_cpp_config_file = ".cpp_includes"
-
-" Go stuff
-"let g:syntastic_go_checkers = ['golint', 'govet', 'gometalinter']
-"let g:syntastic_go_gometalinter_args = ['--disable-all', '--enable=errcheck']
-"let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['-o'] }
-"let g:go_list_type = "quickfix"
 
 
 """""""""""""""""""
