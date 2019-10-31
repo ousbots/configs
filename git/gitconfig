@@ -26,6 +26,12 @@
 	# Show the log of commits introduced in a merge
 	merge-log = "!git log `git merge-span ... $1`"
 
+	# Show the files changed between branches
+	branch-files = "!f() { git diff --name-only $1 $(git merge-base $1 $2); }; f"
+
+	# Show the diff changes between branches
+	branch-diff = "!f() { git diff $1 $(git merge-base $1 $2); }; f"
+
 [user]
 	email = tim@pex.com
 	name = Tim Ousborne
@@ -33,3 +39,7 @@
 [core]
 	editor = nvim
 	pager = less
+
+# Use ssh instead of https for private pex repos
+[url "git@github.com:"]
+	insteadOf = "https://github.com/"
