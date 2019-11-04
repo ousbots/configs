@@ -112,7 +112,7 @@ colorscheme base16-monokai
 "colorscheme base16-shapeshifter
 
 " Clipboard
-"set clipboard+=unnamedplus
+set clipboard+=unnamedplus
 
 " Optimization
 set lazyredraw
