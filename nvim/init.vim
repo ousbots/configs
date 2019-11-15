@@ -24,24 +24,23 @@ if dein#load_state(''.g:dein_dir)
     " Utilities
     call dein#add('dense-analysis/ale')
     call dein#add('farmergreg/vim-lastplace')
-    call dein#add('KorySchneider/vim-trim')
+    "call dein#add('KorySchneider/vim-trim')
 
     " UI
 	"call dein#add('vim-airline/vim-airline')
     call dein#add('scrooloose/nerdtree')
-    call dein#add('majutsushi/tagbar')
+    "call dein#add('majutsushi/tagbar')
     call dein#add('airblade/vim-gitgutter')
     call dein#add('vim-scripts/buffet.vim')
-    "call dein#add('https://bitbucket.org/sras/buffet.git')
 
     " Themes
     call dein#add('chriskempson/base16-vim')
     call dein#add('tomasr/molokai')
 
     " Syntax
-	call dein#add('rust-lang/rust.vim')
-    call dein#add('sheerun/vim-polyglot')
-    call dein#add('ntpeters/vim-better-whitespace')
+    "call dein#add('rust-lang/rust.vim')
+    "call dein#add('sheerun/vim-polyglot')
+    "call dein#add('ntpeters/vim-better-whitespace')
     call dein#add('fatih/vim-go')
 
 	call dein#end()
@@ -118,9 +117,9 @@ set clipboard+=unnamedplus
 set lazyredraw
 
 " Key mappings
-map <C-t> :TagbarToggle<CR>
-map <F8> :TagbarOpenAutoClose<CR>
-map <C-n> :NERDTreeToggle<CR>
+"map <C-t> :TagbarToggle<CR>
+"map <F8> :TagbarOpenAutoClose<CR>
+map <C-o> :NERDTreeToggle<CR>
 map <C-b> :Bufferlist<CR>
 
 
@@ -129,28 +128,33 @@ map <C-b> :Bufferlist<CR>
 """""""""""""""""""""""""
 
 " GitGutter
-if exists('&signcolumn')
-    set signcolumn = "yes"
-else
-    let g:gitgutter_sign_column_always = 1
-endif
+set updatetime=500
 let g:gitgutter_max_signs = 1000
-let g:gitgutter_realtime = 0
-let g:gitgutter_eager = 0
-
-" Airline configuration
-"let g:airline_extensions = []
 
 " ALE (async language server)
 let g:ale_sign_column_always = 1
 let g:ale_set_loclist = 0
-"let g:airline#extensions#ale#enabled = 1
+let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'], 'go': ['goimports', 'gofmt']}
+let g:ale_fix_on_save = 1
 
+let g:ale_linters = {'go': ['gobuild', 'gofmt', 'golint', 'govet']}
 "let g:ale_linters = {'python': ['flake8','mypy']}
 "let g:ale_python_flake8_options = '--ignore=E501'
 
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
+
+" vim-go
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_types = 1
+let g:go_auto_samids = 1
+let g:go_fmt_command = "goimports"
 
 
 """""""""""""""""""
