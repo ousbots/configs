@@ -4,9 +4,9 @@
 #end
 
 # Build the PATH (emulate /etc/profile)
-# Macports : /opt/local/sbin /opt/local/bin
-# Go: /Users/tim/go
-set PATH /Users/tim/go/bin /opt/local/sbin /opt/local/bin $PATH
+# Go: /Users/tim/go/bin
+# Rust: /Users/tim/.cargo/bin
+set PATH /Users/tim/go/bin /Users/tim/.cargo/bin $PATH
 
 # Enable vi mode
 fish_vi_key_bindings
