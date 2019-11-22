@@ -1,0 +1,39 @@
+add_newline = false
+
+[cmd_duration]
+disabled = true
+
+[directory]
+truncation_length = 15
+truncate_to_repo = false
+
+[git_status]
+conflicted_count.enable = true
+modified_count.enable = true
+staged_count.enable = true
+renamed_count.enable = true
+deleted_count.enable = true
+
+[cargo]
+disabled = true
+
+[golang]
+disabled = true
+
+[package]
+disabled = true
+
+[python]
+disabled = true
+
+[ruby]
+disabled = true
+
+[rust]
+disabled = true
+
+[conda]
+disabled = true
+
+[dotnet]
+disabled = true
