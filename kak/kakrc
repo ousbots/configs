@@ -1,0 +1,37 @@
+# colorscheme
+colorscheme palenight
+#colorscheme base16_monokai
+
+# Use plug.kak to manage plugins
+source "%val{config}/plugins/plug.kak/rc/plug.kak"
+
+# add tab commands
+plug "andreyorst/smarttab.kak"
+
+# kakboard yanks to clipboard
+plug "lePerdu/kakboard" %{
+    hook global WinCreate .* %{ kakboard-enable }
+}
+
+# language server
+plug "ul/kak-lsp" do %{
+    cargo build --release --locked
+    cargo install --force --path .
+}
+
+# run the language server for the following languages
+#eval %sh{kak-lsp --kakoune -s $kak_session}
+hook global WinSetOption filetype=(rust|python|go|c|cpp|latex) %{
+    set-option window lsp_auto_highlight_references true
+    set-option window lsp_hover_anchor false
+    lsp-auto-hover-enable
+    lsp-enable-window
+}
+
+# Tab options
+hook global WinSetOption filetype=rust expandtab
+
+set-option global ui_options ncurses_assistant=none
+
+# Line numbers
+add-highlighter global/ number-lines
