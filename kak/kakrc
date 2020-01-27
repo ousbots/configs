@@ -22,7 +22,7 @@ plug "ul/kak-lsp" do %{
 # run the language server for the following languages
 hook global WinSetOption filetype=(rust|python|go|c|cpp|latex) %{
     set-option window lsp_auto_highlight_references true
-    set-option window lsp_hover_anchor false
+    set-option window lsp_hover_anchor true
     lsp-auto-hover-enable
     lsp-enable-window
 }
@@ -37,7 +37,9 @@ hook global WinSetOption filetype=go %{
 }
 
 # Format on save
-hook global BufWritePre .* %{ format }
+hook global WinSetOption filetype=(rust|go) %{
+    hook global BufWritePre .* %{ format }
+}
 
 # Tab options
 hook global WinSetOption filetype=rust expandtab
