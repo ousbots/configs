@@ -61,3 +61,6 @@ set-option global indentwidth 4
 
 # Line numbers
 add-highlighter global/ number-lines
+
+# Wrap text without modifying the buffer
+add-highlighter global/ wrap
