@@ -41,6 +41,13 @@ hook global WinSetOption filetype=(rust|go) %{
     hook global BufWritePre .* %{ format }
 }
 
+# Git gutter
+hook global WinSetOption filetype=(rust|go) %{
+    hook global BufWritePost .* %{ git show-diff }
+    hook global BufReload .* %{ git show-diff }
+    hook global WinDisplay .* %{ git show-diff }
+}
+
 # Tab options
 hook global WinSetOption filetype=rust expandtab
 hook global WinSetOption filetype=go smarttab
