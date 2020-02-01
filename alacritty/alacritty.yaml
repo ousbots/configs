@@ -25,7 +25,8 @@ font:
 
 visual_bell:
   animation: EaseOutExpo
-  duration: 100
+  duration: 10
+  color: '0xff8c00'
 
 mouse:
   hide_when_typing: true
@@ -34,7 +35,8 @@ colors:
   # base16 palenight theme
   # Default colors
   primary:
-    background: '0x292d3e'
+    #background: '0x292d3e'
+    background: '0x000000'
     foreground: '0x959dcb'
 
   # Colors the cursor will use if `custom_cursor_colors` is true
