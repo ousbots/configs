@@ -1,0 +1,217 @@
+{ config, pkgs, ... }:
+
+{
+  # List packages installed in system profile. To search by name, run:
+  # $ nix-env -qaP | grep wget
+  environment.systemPackages = [
+    pkgs.vim
+    pkgs.helix
+  ];
+
+  # Use a custom configuration.nix location.
+  # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
+  # environment.darwinConfig = "$HOME/.config/nixpkgs/darwin/configuration.nix";
+
+  # Auto upgrade nix and the daemon service and set nix options.
+  services.nix-daemon.enable = true;
+  nix.package = pkgs.nix;
+  nix.extraOptions = ''
+    system = aarch64-darwin # M1
+    extra-platforms = aarch64-darwin x86_64-darwin # Allow M1 and Rosetta apps
+    #experimental-features = nix-command flakes
+    build-users-group = nixbld
+    auto-optimise-store = true
+  '';
+
+  # Keyboard options.
+  system.keyboard = {
+    enableKeyMapping = true;
+    remapCapsLockToEscape = true;
+  };
+
+  # System default changes.
+  system.defaults = {
+    dock = {
+      autohide = true;
+      mru-spaces = false;
+    };
+    finder = {
+      AppleShowAllExtensions = true;
+      FXPreferredViewStyle = "Nlsv";
+      ShowPathbar = true;
+      ShowStatusBar = true;
+    };
+  };
+
+  imports = [ <home-manager/nix-darwin> ];
+
+  home-manager.useGlobalPkgs = true;
+
+  users.users.tim = {
+    name = "tim";
+    home = "/Users/tim";
+  };
+
+  home-manager.users.tim = {pkgs, ... }: {
+    home.packages = [
+      pkgs.angle-grinder
+      pkgs.aspell
+      pkgs.aspellDicts.en
+      pkgs.aspellDicts.en-computers
+      pkgs.aspellDicts.en-science
+      pkgs.bat
+      pkgs.cmake
+      pkgs.colima
+      pkgs.ddrescue
+      pkgs.delta
+      pkgs.delve
+      pkgs.difftastic
+      pkgs.duf
+      pkgs.exa
+      pkgs.fd
+      pkgs.ffmpeg
+      pkgs.fira-code
+      pkgs.fish
+      pkgs.glow
+      pkgs.gnupg
+      pkgs.go_1_18
+      pkgs.gopls
+      pkgs.helix
+      #pkgs.httpie
+      pkgs.htop
+      pkgs.kakoune
+      pkgs.kak-lsp
+      pkgs.mosh
+      pkgs.ripgrep
+      pkgs.rtorrent
+      pkgs.rustup
+      pkgs.rust-analyzer
+      pkgs.sd
+      pkgs.starship
+      pkgs.tokei
+      pkgs.texlive.combined.scheme-tetex
+      #pkgs.valgrind
+      #pkgs.wezterm
+      #pkgs.yabai
+      pkgs.zoxide
+      #pkgs.zim
+    ];
+
+    home.stateVersion = "22.05";
+
+    programs.fish = {
+      enable = true;
+      plugins = [{
+          name="foreign-env";
+          src = pkgs.fetchFromGitHub {
+              owner = "oh-my-fish";
+              repo = "plugin-foreign-env";
+              rev = "dddd9213272a0ab848d474d0cbde12ad034e65bc";
+              #sha256 = "00xqlyl3lffc5l0viin1nyp819wf81fncqyz87jx8ljjdhilmgbs";
+              sha256 = "er1KI2xSUtTlQd9jZl1AjqeArrfBxrgBLcw5OqinuAM=";
+          };
+      }];
+      shellInit = ''
+        # nix
+        if test -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+            fenv source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+        end
+      '';
+      interactiveShellInit = ''
+        # Environment variables
+        set RIPGREP_CONFIG_PATH /Users/tim/.config/ripgreprc
+
+        # PATH
+        # Rust: /Users/tim/.cargo/bin
+        contains /Users/tim/.cargo/bin $PATH
+        or set PATH /Users/tim/.cargo/bin $PATH
+
+        # Enable vi mode
+        fish_vi_key_bindings
+
+        # starship
+        eval (starship init fish)
+
+        # editor
+        set EDITOR hx
+      '';
+      shellAliases = {
+        "ls" = "exa -l --icons";
+        "l" = "ls";
+        "ll" = "ls -a";
+        "cl" = "cd $argv; and ls";
+      };
+    };
+
+    programs.starship = {
+      enable = true;
+      enableFishIntegration = true;
+      settings = {
+        add_newline = true;
+        cmd_duration.disabled = true;
+        golang.disabled = true;
+        package.disabled = true;
+        rust.disabled = true;
+      };
+    };
+
+    programs.git = {
+      enable = true;
+      userName = "Tim Ousborne";
+      userEmail = "dev@sourbone.net";
+    };
+  };
+
+  # Create /etc/bashrc that loads the nix-darwin environment.
+  #programs.zsh.enable = true;  # default shell on catalina
+  programs.fish.enable = true;
+  environment.shells = with pkgs; [ fish ];
+
+  services.yabai = {
+    enable = false;
+    enableScriptingAddition = false;
+    package = pkgs.yabai;
+    config = {
+      layout = "bsp";
+      auto_balance = "on";
+      split_ratio = "0.50";
+      window_placement = "second_child";
+      focus_follows_mouse = "autoraise";
+      #window_shadow = "float";
+      window_border = "off";
+      window_topmost = "off";
+    };
+    extraConfig = ''
+      yabai -m rule --add app='System Preferences' manage=off
+      yabai -m rule --add app='Activity Monitor' manage=off
+    '';
+  };
+
+  services.skhd = {
+    enable = true;
+    package = pkgs.skhd;
+    skhdConfig = ''
+      # terminal
+      cmd - return : /Applications/WezTerm.app/Contents/MacOs/wezterm-gui
+
+      # focus
+      shift + cmd - h : yabai -m window --focus west
+      shift + cmd - l : yabai -m window --focus east
+    
+      # swap
+      ctrl + cmd - h : yabai -m window --swap west
+      ctrl + cmd - l : yabai -m window --swap east
+    '';
+  };
+
+  # Used for backwards compatibility, please read the changelog before changing.
+  # $ darwin-rebuild changelog
+  system.stateVersion = 4;
+
+  # Delete old nix generations regularly (doesn't work on MacOS).
+  nix.gc = {
+    automatic = true;
+    options = "--delete-older-than 3d";
+  };
+
+}
