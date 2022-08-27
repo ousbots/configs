@@ -1,0 +1,7 @@
+theme = "night_owl"
+#theme = "catppuccin_mocha"
+#theme = "custom"
+
+[editor]
+lsp.display-messages = false
+auto-pairs = false
