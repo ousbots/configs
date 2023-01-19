@@ -12,7 +12,11 @@ end
 return {
   font = wezterm.font("JetBrains Mono"),
   font_size = 14.0,
-  color_scheme = "Aci (Gogh)",
+  color_scheme = "Catppuccin Mocha",
+  colors = {
+    background = '#101116',
+  },
+  --color_scheme = "Blue Matrix",
   use_fancy_tab_bar = true,
-  keys = myskeys,
+  keys = mykeys,
 }
