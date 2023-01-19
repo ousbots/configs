@@ -1,58 +1,83 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
-  environment.systemPackages = [
-    pkgs.vim
-    pkgs.helix
-  ];
+  environment.systemPackages = [];
 
   # Use a custom configuration.nix location.
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
   # environment.darwinConfig = "$HOME/.config/nixpkgs/darwin/configuration.nix";
 
   # Auto upgrade nix and the daemon service and set nix options.
+  #nix.package = pkgs.nix; # default option
   services.nix-daemon.enable = true;
-  nix.package = pkgs.nix;
   nix.extraOptions = ''
-    system = aarch64-darwin # M1
+    #system = aarch64-darwin # M1, set by default
     extra-platforms = aarch64-darwin x86_64-darwin # Allow M1 and Rosetta apps
     #experimental-features = nix-command flakes
     build-users-group = nixbld
-    auto-optimise-store = true
+    #auto-optimise-store = true
   '';
 
-  # Keyboard options.
-  system.keyboard = {
-    enableKeyMapping = true;
-    remapCapsLockToEscape = true;
+  # MacOS Settings.
+  system = {
+    defaults = {
+      NSGlobalDomain = {
+        AppleInterfaceStyleSwitchesAutomatically = true; # Switch between dark and light modes.
+        AppleKeyboardUIMode = 3; # Full keyboard control (accessibility settings).
+        AppleShowScrollBars = "Always"; # Always show scroll bars.
+        InitialKeyRepeat = 15; # Delay before keys repeat.
+        KeyRepeat = 2; # Key repeat speed.
+        NSDocumentSaveNewDocumentsToCloud = false; # Don't save docs to iCloud.
+        NSNavPanelExpandedStateForSaveMode = true; # Use the expanded save file dialog.
+        NSNavPanelExpandedStateForSaveMode2 = true; # Use the expanded save file dialog (unsure of difference).
+      };
+
+      alf = {
+        globalstate = 1; # Incoming firewall state, 0 = disabled, 1 = enabled, 2 = only essential services
+        stealthenabled = 1; # Drop pings.
+      };
+
+      dock = {
+        autohide = true; # Autohide the dock.
+        mru-spaces = false; # (Do not) Automatically rearange spaces based on most recent use.
+      };
+
+      finder = {
+        AppleShowAllExtensions = true; # Show all file extensions.
+        FXDefaultSearchScope = "SCcf"; # Finder search scope, "SCcf" = current folder.
+        FXPreferredViewStyle = "Nlsv"; # Default view style. "icnv" = icons, "Nlsv" = list, "clmv" = column, "Flwv" = gallery.
+        ShowPathbar = true; # Show the path breadcrumb at the bottom.
+        ShowStatusBar = true; # Show the status bar.
+      };
+
+      loginwindow.GuestEnabled = false; # Guest account (disabled).
+
+      trackpad = {
+        ActuationStrength = 0; # Click strength 0 = silent, 1 = clicky.
+        Clicking = true; # Enable tap to click.
+        TrackpadRightClick = true; # Enable right click.
+      };
+    };
+
+    keyboard = {
+      enableKeyMapping = true; # Enable key re-mapping.
+      remapCapsLockToControl = true; # Caps Lock is a control key.
+    };
   };
 
-  # System default changes.
-  system.defaults = {
-    dock = {
-      autohide = true;
-      mru-spaces = false;
-    };
-    finder = {
-      AppleShowAllExtensions = true;
-      FXPreferredViewStyle = "Nlsv";
-      ShowPathbar = true;
-      ShowStatusBar = true;
-    };
-  };
-
+  # Home Manager setup.
   imports = [ <home-manager/nix-darwin> ];
+  #home-manager.useGlobalPkgs = true;
 
-  home-manager.useGlobalPkgs = true;
-
-  users.users.tim = {
-    name = "tim";
-    home = "/Users/tim";
+  # User setup.
+  users.users.timo = {
+    name = "timo";
+    home = "/Users/timo";
   };
 
-  home-manager.users.tim = {pkgs, ... }: {
+  home-manager.users.timo = {pkgs, ... }: {
     home.packages = [
       pkgs.angle-grinder
       pkgs.aspell
@@ -60,41 +85,42 @@
       pkgs.aspellDicts.en-computers
       pkgs.aspellDicts.en-science
       pkgs.bat
-      pkgs.cmake
       pkgs.colima
-      pkgs.ddrescue
       pkgs.delta
       pkgs.delve
       pkgs.difftastic
+      pkgs.docker
       pkgs.duf
       pkgs.exa
       pkgs.fd
-      pkgs.ffmpeg
       pkgs.fira-code
       pkgs.fish
       pkgs.glow
       pkgs.gnupg
-      pkgs.go_1_18
+      pkgs.go
+      pkgs.google-cloud-sdk
       pkgs.gopls
       pkgs.helix
-      #pkgs.httpie
       pkgs.htop
-      pkgs.kakoune
-      pkgs.kak-lsp
+      pkgs.jetbrains-mono
+      pkgs.k9s
+      pkgs.kubectl
+      pkgs.kubernetes-helm-wrapped
       pkgs.mosh
+      pkgs.mycli
+      pkgs.okteto
       pkgs.ripgrep
-      pkgs.rtorrent
       pkgs.rustup
       pkgs.rust-analyzer
       pkgs.sd
+      pkgs.slack
       pkgs.starship
       pkgs.tokei
-      pkgs.texlive.combined.scheme-tetex
       #pkgs.valgrind
       #pkgs.wezterm
-      #pkgs.yabai
+      pkgs.yabai
+      pkgs.yarn
       pkgs.zoxide
-      #pkgs.zim
     ];
 
     home.stateVersion = "22.05";
@@ -119,12 +145,12 @@
       '';
       interactiveShellInit = ''
         # Environment variables
-        set RIPGREP_CONFIG_PATH /Users/tim/.config/ripgreprc
+        set RIPGREP_CONFIG_PATH /Users/timo/.config/ripgreprc
 
         # PATH
-        # Rust: /Users/tim/.cargo/bin
-        contains /Users/tim/.cargo/bin $PATH
-        or set PATH /Users/tim/.cargo/bin $PATH
+        # Rust: /Users/timo/.cargo/bin
+        contains /Users/timo/.cargo/bin $PATH
+        or set PATH /Users/timo/.cargo/bin $PATH
 
         # Enable vi mode
         fish_vi_key_bindings
@@ -147,28 +173,105 @@
       enable = true;
       enableFishIntegration = true;
       settings = {
+        format = lib.concatStrings [
+        "[](#9A348E)"
+        "$os"
+        "$username"
+        "[](bg:#DA627D fg:#9A348E)"
+        "$directory"
+        "[](fg:#DA627D bg:#FCA17D)"
+        "$git_branch"
+        "$git_status"
+        "[](fg:#FCA17D bg:#86BBD8)"
+        "$docker_context"
+        "[](fg:#86BBD8 bg:#06969A)"
+        "$nix_shell"
+        "[](fg:#06969A bg:#33658A)"
+        "[](fg:#33658A)"
+        "$line_break"
+        "$character"
+        ];
+
+        # Enable the blank line at the start of the prompt
         add_newline = true;
+
+        # Disable command durations and set the starship timeout
         cmd_duration.disabled = true;
-        golang.disabled = true;
+        scan_timeout = 10;
+
+        # Disable package versions
         package.disabled = true;
-        rust.disabled = true;
+
+        # You can also replace your username with a neat symbol like   or disable this
+        # and use the os module below
+        username.show_always = true;
+        username.style_user = "fg:#101116 bg:#9A348E";
+        username.style_root = "fg:#101116 bg:#9A348E";
+        username.format = ''[$user ]($style)'';
+        username.disabled = false;
+
+        # An alternative to the username module which displays a symbol that
+        # represents the current operating system
+        os.style = "bg:#9A348E";
+        os.disabled = true;
+
+        directory.style = "fg:#101116 bg:#DA627D";
+        directory.format = "[ $path ]($style)";
+        directory.truncation_length = 3;
+        directory.truncation_symbol = "…/";
+
+        # Here is how you can shorten some long paths by text replacement
+        # similar to mapped_locations in Oh My Posh:
+        directory.substitutions."Documents" = " ";
+        directory.substitutions."Downloads" = " ";
+        directory.substitutions."Music" = " ";
+        directory.substitutions."Pictures" = " ";
+
+        docker_context.symbol = " ";
+        docker_context.style = "fg:#101116 bg:#86BBD8";
+        docker_context.format = ''[ $symbol $context ]($style)'';
+
+        nix_shell.symbol = "❄️ ";
+        nix_shell.style = "fg:#101116 bg:#06969A";
+        nix_shell.format = ''[ $symbol $state: $name ]($style)'';
+
+        git_branch.symbol = "";
+        git_branch.style = "fg:#101116 bg:#FCA17D";
+        git_branch.format = ''[ $symbol $branch ]($style)'';
+
+        git_status.style = "fg:#101116 bg:#FCA17D";
+        git_status.format = ''[$all_status$ahead_behind ]($style)'';
       };
     };
 
     programs.git = {
       enable = true;
       userName = "Tim Ousborne";
-      userEmail = "dev@sourbone.net";
+      userEmail = "timo@replicated.com";
+      extraConfig = {
+        push.autoSetupRemote = true;
+      };
+    };
+
+    programs.helix = {
+      enable = true;
+      settings = {
+        editor.lsp.display-messages = false;
+        editor.auto-pairs = false;
+        #theme = "night_owl";
+        #theme = "catppuccin_mocha";
+        theme = "catppuccin_dark";
+      };
     };
   };
 
   # Create /etc/bashrc that loads the nix-darwin environment.
   #programs.zsh.enable = true;  # default shell on catalina
   programs.fish.enable = true;
-  environment.shells = with pkgs; [ fish ];
+  environment.shells = [ pkgs.fish ];
 
   services.yabai = {
-    enable = false;
+    enable = true;
     enableScriptingAddition = false;
     package = pkgs.yabai;
     config = {
@@ -182,7 +285,7 @@
       window_topmost = "off";
     };
     extraConfig = ''
-      yabai -m rule --add app='System Preferences' manage=off
+      yabai -m rule --add app='System Settings' manage=off
       yabai -m rule --add app='Activity Monitor' manage=off
     '';
   };
@@ -197,12 +300,15 @@
       # focus
       shift + cmd - h : yabai -m window --focus west
       shift + cmd - l : yabai -m window --focus east
-    
+
       # swap
       ctrl + cmd - h : yabai -m window --swap west
       ctrl + cmd - l : yabai -m window --swap east
     '';
   };
+
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
@@ -213,5 +319,4 @@
     automatic = true;
     options = "--delete-older-than 3d";
   };
-
 }
