@@ -35,7 +35,7 @@
       };
 
       alf = {
-        globalstate = 1; # Incoming firewall state, 0 = disabled, 1 = enabled, 2 = only essential services
+        globalstate = 1; # Incoming firewall state, 0 = disabled, 1 = enabled, 2 = only essential services.
         stealthenabled = 1; # Drop pings.
       };
 
@@ -174,20 +174,19 @@
       enableFishIntegration = true;
       settings = {
         format = lib.concatStrings [
-        "[](#9A348E)"
-        "$os"
+        "[](#33658A)"
         "$username"
-        "[](bg:#DA627D fg:#9A348E)"
+        "[](bg:#06969A fg:#33658A)"
         "$directory"
-        "[](fg:#DA627D bg:#FCA17D)"
+        "[](bg:#86BBD8 fg:#06969A )"
         "$git_branch"
         "$git_status"
-        "[](fg:#FCA17D bg:#86BBD8)"
+        "[](bg:#FCA17D fg:#86BBD8 )"
         "$docker_context"
-        "[](fg:#86BBD8 bg:#06969A)"
+        "[](bg:#DA627D fg:#FCA17D )"
         "$nix_shell"
-        "[](fg:#06969A bg:#33658A)"
-        "[](fg:#33658A)"
+        "[](bg:#9A348E fg:#DA627D)"
+        "[](fg:#9A348E)"
         "$line_break"
         "$character"
         ];
@@ -199,23 +198,15 @@
         cmd_duration.disabled = true;
         scan_timeout = 10;
 
-        # Disable package versions
-        package.disabled = true;
-
         # You can also replace your username with a neat symbol like   or disable this
         # and use the os module below
         username.show_always = true;
-        username.style_user = "fg:#101116 bg:#9A348E";
-        username.style_root = "fg:#101116 bg:#9A348E";
+        username.style_user = "fg:#101116 bg:#33658A";
+        username.style_root = "fg:#101116 bg:#33658A";
         username.format = ''[$user ]($style)'';
         username.disabled = false;
 
-        # An alternative to the username module which displays a symbol that
-        # represents the current operating system
-        os.style = "bg:#9A348E";
-        os.disabled = true;
-
-        directory.style = "fg:#101116 bg:#DA627D";
+        directory.style = "fg:#101116 bg:#06969A";
         directory.format = "[ $path ]($style)";
         directory.truncation_length = 3;
         directory.truncation_symbol = "…/";
@@ -227,20 +218,20 @@
         directory.substitutions."Music" = " ";
         directory.substitutions."Pictures" = " ";
 
+        git_branch.symbol = "";
+        git_branch.style = "fg:#101116 bg:#86BBD8";
+        git_branch.format = ''[ $symbol $branch ]($style)'';
+
+        git_status.style = "fg:#101116 bg:#86BBD8";
+        git_status.format = ''[$all_status$ahead_behind ]($style)'';
+
         docker_context.symbol = " ";
-        docker_context.style = "fg:#101116 bg:#86BBD8";
+        docker_context.style = "fg:#101116 bg:#FCA17D";
         docker_context.format = ''[ $symbol $context ]($style)'';
 
         nix_shell.symbol = "❄️ ";
-        nix_shell.style = "fg:#101116 bg:#06969A";
+        nix_shell.style = "fg:#101116 bg:#DA6270";
         nix_shell.format = ''[ $symbol $state: $name ]($style)'';
-
-        git_branch.symbol = "";
-        git_branch.style = "fg:#101116 bg:#FCA17D";
-        git_branch.format = ''[ $symbol $branch ]($style)'';
-
-        git_status.style = "fg:#101116 bg:#FCA17D";
-        git_status.format = ''[$all_status$ahead_behind ]($style)'';
       };
     };
 
