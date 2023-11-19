@@ -1,7 +1,9 @@
-theme = "night_owl"
-#theme = "catppuccin_mocha"
-#theme = "custom"
-
+theme = "catppuccin_dark"
 [editor]
-lsp.display-messages = false
 auto-pairs = false
+
+[editor.lsp]
+display-messages = false
+
+[editor.soft-wrap]
+enable = true
