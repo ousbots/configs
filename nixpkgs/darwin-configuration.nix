@@ -72,54 +72,56 @@
   #home-manager.useGlobalPkgs = true;
 
   # User setup.
-  users.users.timo = {
-    name = "timo";
-    home = "/Users/timo";
+  users.users.tim = {
+    name = "tim";
+    home = "/Users/tim";
   };
 
-  home-manager.users.timo = {pkgs, ... }: {
+  home-manager.users.tim = {pkgs, ... }: {
     home.packages = [
-      pkgs.angle-grinder
+      #pkgs.angle-grinder
       pkgs.aspell
       pkgs.aspellDicts.en
       pkgs.aspellDicts.en-computers
       pkgs.aspellDicts.en-science
       pkgs.bat
       pkgs.colima
+      pkgs.coreutils
       pkgs.delta
       pkgs.delve
       pkgs.difftastic
       pkgs.docker
       pkgs.duf
-      pkgs.exa
+      pkgs.eza
       pkgs.fd
       pkgs.fira-code
       pkgs.fish
+      #pkgs.firefox-devedition-bin
       pkgs.glow
       pkgs.gnupg
       pkgs.go
-      pkgs.google-cloud-sdk
       pkgs.gopls
       pkgs.helix
       pkgs.htop
+      pkgs.httpie
       pkgs.jetbrains-mono
-      pkgs.k9s
-      pkgs.kubectl
-      pkgs.kubernetes-helm-wrapped
+      #pkgs.k9s
+      #pkgs.kubectl
+      #pkgs.kubernetes-helm-wrapped
       pkgs.mosh
-      pkgs.mycli
-      pkgs.okteto
+      #pkgs.mycli
+      pkgs.nodejs
+      #pkgs.nerdctl
+      pkgs.pgcli
       pkgs.ripgrep
       pkgs.rustup
-      pkgs.rust-analyzer
+      pkgs.rsync
       pkgs.sd
-      pkgs.slack
       pkgs.starship
       pkgs.tokei
       #pkgs.valgrind
       #pkgs.wezterm
       pkgs.yabai
-      pkgs.yarn
       pkgs.zoxide
     ];
 
@@ -145,12 +147,25 @@
       '';
       interactiveShellInit = ''
         # Environment variables
-        set RIPGREP_CONFIG_PATH /Users/timo/.config/ripgreprc
+        set RIPGREP_CONFIG_PATH /Users/tim/.config/ripgreprc
 
-        # PATH
-        # Rust: /Users/timo/.cargo/bin
-        contains /Users/timo/.cargo/bin $PATH
-        or set PATH /Users/timo/.cargo/bin $PATH
+        # Rust: /Users/tim/.cargo/bin
+        if test -d /Users/tim/.cargo/bin
+          contains /Users/tim/.cargo/bin $PATH
+          or set PATH /Users/tim/.cargo/bin $PATH
+        end
+
+        # Golang: /Users/tim/go/bin
+        if test -d /Users/tim/go/bin
+          contains /Users/tim/go/bin $PATH
+          or set PATH /Users/tim/go/bin $PATH
+        end
+
+        # Yarn: /Users/tim/.yarn/bin
+        if test -d /Users/tim/.yarn/bin
+          contains /Users/tim/.yarn/bin $PATH
+          or set PATH /Users/tim/.yarn/bin $PATH
+        end
 
         # Enable vi mode
         fish_vi_key_bindings
@@ -162,10 +177,10 @@
         set EDITOR hx
       '';
       shellAliases = {
-        "ls" = "exa -l --icons";
+        "ls" = "eza -l --icons";
         "l" = "ls";
         "ll" = "ls -a";
-        "cl" = "cd $argv; and ls";
+        "cl" = "cd $argv and ls";
       };
     };
 
@@ -238,17 +253,22 @@
     programs.git = {
       enable = true;
       userName = "Tim Ousborne";
-      userEmail = "timo@replicated.com";
+      userEmail = "dev@sourbone.net";
       extraConfig = {
         push.autoSetupRemote = true;
+        init.defaultBranch = "main";
+        merge.conflictStyle = "zdiff3";
+        diff.algorithm = "histogram";
+        alias.df = "diff --color-words";
       };
     };
 
     programs.helix = {
       enable = true;
       settings = {
-        editor.lsp.display-messages = false;
         editor.auto-pairs = false;
+        editor.lsp.display-messages = false;
+        editor.soft-wrap.enable = true;
         #theme = "night_owl";
         #theme = "catppuccin_mocha";
         theme = "catppuccin_dark";
