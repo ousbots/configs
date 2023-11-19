@@ -4,19 +4,18 @@ local mykeys = {}
 for i = 1, 8 do
   table.insert(mykeys, {
     key=tostring(i),
-    mods="CMD|ALT",
+    mods="CTRL",
     action=wezterm.action{MoveTab=i-1},
   })
 end
 
 return {
   font = wezterm.font("JetBrains Mono"),
-  font_size = 14.0,
-  color_scheme = "Catppuccin Mocha",
+  font_size = 16.0,
+  color_scheme = "catppuccin-mocha",
   colors = {
-    background = '#101116',
+    background = '#101110',
   },
-  --color_scheme = "Blue Matrix",
   use_fancy_tab_bar = true,
   keys = mykeys,
 }
