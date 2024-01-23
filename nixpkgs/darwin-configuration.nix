@@ -96,7 +96,6 @@
       pkgs.fd
       pkgs.fira-code
       pkgs.fish
-      #pkgs.firefox-devedition-bin
       pkgs.glow
       pkgs.gnupg
       pkgs.go
@@ -109,7 +108,6 @@
       #pkgs.kubectl
       #pkgs.kubernetes-helm-wrapped
       pkgs.mosh
-      #pkgs.mycli
       pkgs.nodejs
       #pkgs.nerdctl
       pkgs.pgcli
@@ -119,9 +117,7 @@
       pkgs.sd
       pkgs.starship
       pkgs.tokei
-      #pkgs.valgrind
       #pkgs.wezterm
-      pkgs.yabai
       pkgs.zoxide
     ];
 
@@ -189,21 +185,21 @@
       enableFishIntegration = true;
       settings = {
         format = lib.concatStrings [
-        "[](#33658A)"
-        "$username"
-        "[](bg:#06969A fg:#33658A)"
-        "$directory"
-        "[](bg:#86BBD8 fg:#06969A )"
-        "$git_branch"
-        "$git_status"
-        "[](bg:#FCA17D fg:#86BBD8 )"
-        "$docker_context"
-        "[](bg:#DA627D fg:#FCA17D )"
-        "$nix_shell"
-        "[](bg:#9A348E fg:#DA627D)"
-        "[](fg:#9A348E)"
-        "$line_break"
-        "$character"
+          "[](#ffd6a5)"
+          "$username"
+          "[](bg:#fdffb6 fg:#ffd6a5)"
+          "$directory"
+          "[](bg:#caffbf fg:#fdffb6)"
+          "$git_branch"
+          "$git_status"
+          "[](bg:#9bf6ff fg:#caffbf)"
+          "$docker_context"
+          "[](bg:#a0c4ff fg:#9bf6ff)"
+          "$nix_shell"
+          "[](bg:#bdb2ff fg:#a0c4ff)"
+          "[](fg:#bdb2ff)"
+          "$line_break$"
+          "character"
         ];
 
         # Enable the blank line at the start of the prompt
@@ -216,12 +212,12 @@
         # You can also replace your username with a neat symbol like   or disable this
         # and use the os module below
         username.show_always = true;
-        username.style_user = "fg:#101116 bg:#33658A";
-        username.style_root = "fg:#101116 bg:#33658A";
+        username.style_user = "fg:#101116 bg:#ffd6a5";
+        username.style_root = "fg:#101116 bg:#ffd6a5";
         username.format = ''[$user ]($style)'';
         username.disabled = false;
 
-        directory.style = "fg:#101116 bg:#06969A";
+        directory.style = "fg:#101116 bg:#fdffb6";
         directory.format = "[ $path ]($style)";
         directory.truncation_length = 3;
         directory.truncation_symbol = "…/";
@@ -234,18 +230,18 @@
         directory.substitutions."Pictures" = " ";
 
         git_branch.symbol = "";
-        git_branch.style = "fg:#101116 bg:#86BBD8";
+        git_branch.style = "fg:#101116 bg:#caffbf";
         git_branch.format = ''[ $symbol $branch ]($style)'';
 
-        git_status.style = "fg:#101116 bg:#86BBD8";
+        git_status.style = "fg:#101116 bg:#caffbf";
         git_status.format = ''[$all_status$ahead_behind ]($style)'';
 
         docker_context.symbol = " ";
-        docker_context.style = "fg:#101116 bg:#FCA17D";
+        docker_context.style = "fg:#101116 bg:#9bf6ff";
         docker_context.format = ''[ $symbol $context ]($style)'';
 
         nix_shell.symbol = "❄️ ";
-        nix_shell.style = "fg:#101116 bg:#DA6270";
+        nix_shell.style = "fg:#101116 bg:#da6270";
         nix_shell.format = ''[ $symbol $state: $name ]($style)'';
       };
     };
@@ -280,43 +276,6 @@
   #programs.zsh.enable = true;  # default shell on catalina
   programs.fish.enable = true;
   environment.shells = [ pkgs.fish ];
-
-  services.yabai = {
-    enable = true;
-    enableScriptingAddition = false;
-    package = pkgs.yabai;
-    config = {
-      layout = "bsp";
-      auto_balance = "on";
-      split_ratio = "0.50";
-      window_placement = "second_child";
-      focus_follows_mouse = "autoraise";
-      #window_shadow = "float";
-      window_border = "off";
-      window_topmost = "off";
-    };
-    extraConfig = ''
-      yabai -m rule --add app='System Settings' manage=off
-      yabai -m rule --add app='Activity Monitor' manage=off
-    '';
-  };
-
-  services.skhd = {
-    enable = true;
-    package = pkgs.skhd;
-    skhdConfig = ''
-      # terminal
-      cmd - return : /Applications/WezTerm.app/Contents/MacOs/wezterm-gui
-
-      # focus
-      shift + cmd - h : yabai -m window --focus west
-      shift + cmd - l : yabai -m window --focus east
-
-      # swap
-      ctrl + cmd - h : yabai -m window --swap west
-      ctrl + cmd - l : yabai -m window --swap east
-    '';
-  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
