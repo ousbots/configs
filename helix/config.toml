@@ -3,6 +3,7 @@ theme = "catppuccin_dark"
 auto-pairs = false
 
 [editor.lsp]
+auto-signature-help = false
 display-messages = false
 
 [editor.soft-wrap]
