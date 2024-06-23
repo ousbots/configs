@@ -33,7 +33,7 @@ style = "fg:#101116 bg:#caffbf"
 
 [nix_shell]
 format = "[ $symbol $state: $name ]($style)"
-style = "fg:#101116 bg:#DA6270"
+style = "fg:#101116 bg:#da6270"
 symbol = "❄️ "
 
 [username]
