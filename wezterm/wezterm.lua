@@ -1,17 +1,24 @@
 local wezterm = require "wezterm";
 
-local mykeys = {}
+local keys = {}
 for i = 1, 8 do
-  table.insert(mykeys, {
-    key=tostring(i),
-    mods="OPT",
-    action=wezterm.action{MoveTab=i-1},
+  table.insert(keys, {
+    key = tostring(i),
+    mods = "OPT",
+    action = wezterm.action{MoveTab=i-1},
   })
 end
 
+table.insert(keys, {
+  key = 'w',
+  mods = 'CMD',
+  action = wezterm.action.CloseCurrentTab{ confirm = true },
+})
+
 return {
-  font = wezterm.font("JetBrains Mono"),
-  font_size = 16.0,
+  font = wezterm.font("Monaspace Neon"),
+  font_size = 17.0,
+  line_height = 1.1,
   window_decorations = "TITLE | RESIZE",
   color_scheme = "catppuccin-mocha",
   colors = {
