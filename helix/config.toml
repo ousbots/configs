@@ -1,10 +1,22 @@
 theme = "catppuccin_dark"
+
 [editor]
+auto-completion = false
 auto-pairs = false
 
 [editor.lsp]
-auto-signature-help = false
+auto-signature-help = true
+display-signature-help-docs = true
+display-inlay-hints = false
 display-messages = false
 
 [editor.soft-wrap]
 enable = true
+
+[keys.insert]
+C-k = "completion"
+
+[keys.normal]
+c = "change_selection_noyank"
+d = "delete_selection_noyank"
+C-k = "signature_help"
