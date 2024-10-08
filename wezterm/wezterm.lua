@@ -1,25 +1,26 @@
 local wezterm = require "wezterm";
 
+-- Keybindings:
 local keys = {}
-for i = 1, 8 do
-  table.insert(keys, {
-    key = tostring(i),
-    mods = "OPT",
-    action = wezterm.action{MoveTab=i-1},
-  })
-end
 
+-- Show a confirmation prompt when closing a tab.
 table.insert(keys, {
   key = "w",
-  mods = "OPT",
+  mods = "SUPER",
   action = wezterm.action.CloseCurrentTab{ confirm = true },
 })
 
-return {
+-- Configuration:
+config = {
+  keys = keys,
+
+  -- Fonts.
   -- font = wezterm.font("Monaspace Neon"),
   font = wezterm.font("Codelia Ligatures"),
   font_size = 17.0,
   line_height = 1.0,
+
+  -- Theme.
   window_decorations = "TITLE | RESIZE",
   color_scheme = "catppuccin-mocha",
   colors = {
@@ -27,6 +28,9 @@ return {
   },
   use_fancy_tab_bar = true,
   adjust_window_size_when_changing_font_size = false,
-  keys = mykeys,
+
+  -- Rendering engine.
   front_end = "WebGpu",
 }
+
+return config
