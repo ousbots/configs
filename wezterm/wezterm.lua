@@ -10,13 +10,14 @@ for i = 1, 8 do
 end
 
 table.insert(keys, {
-  key = 'w',
-  mods = 'CMD',
+  key = "w",
+  mods = "CMD",
   action = wezterm.action.CloseCurrentTab{ confirm = true },
 })
 
 return {
-  font = wezterm.font("Monaspace Neon"),
+  -- font = wezterm.font("Monaspace Neon"),
+  font = wezterm.font("Codelia Ligatures"),
   font_size = 17.0,
   line_height = 1.1,
   window_decorations = "TITLE | RESIZE",
