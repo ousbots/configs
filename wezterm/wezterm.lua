@@ -11,7 +11,7 @@ end
 
 table.insert(keys, {
   key = "w",
-  mods = "CMD",
+  mods = "OPT",
   action = wezterm.action.CloseCurrentTab{ confirm = true },
 })
 
@@ -19,7 +19,7 @@ return {
   -- font = wezterm.font("Monaspace Neon"),
   font = wezterm.font("Codelia Ligatures"),
   font_size = 17.0,
-  line_height = 1.1,
+  line_height = 1.0,
   window_decorations = "TITLE | RESIZE",
   color_scheme = "catppuccin-mocha",
   colors = {
