@@ -1,0 +1,44 @@
+add_newline = true
+format = "[](#ffadad)$username[](bg:#ffd6a5 fg:#ffadad)$directory[](bg:#fdffb6 fg:#ffd6a5 )$git_branch$git_status[](bg:#caffbf fg:#fdffb6)$docker_context[](bg:#9bf6ff fg:#caffbf)$nix_shell[](bg:#a0c4ff fg:#9bf6ff)[](fg:#a0c4ff)$line_break$character"
+scan_timeout = 10
+
+[cmd_duration]
+disabled = true
+
+[directory]
+format = "[ $path ]($style)"
+style = "fg:#101116 bg:#ffd6a5"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[directory.substitutions]
+Documents = " "
+Downloads = " "
+Music = " "
+Pictures = " "
+
+[docker_context]
+format = "[ $symbol $context ]($style)"
+style = "fg:#101116 bg:#caffbf"
+symbol = " "
+
+[git_branch]
+format = "[ $symbol $branch ]($style)"
+style = "fg:#101116 bg:#fdffb6"
+symbol = ""
+
+[git_status]
+format = "[$all_status$ahead_behind ]($style)"
+style = "fg:#101116 bg:#fdffb6"
+
+[nix_shell]
+format = "[ $symbol $state: $name ]($style)"
+style = "fg:#101116 bg:#DA6270"
+symbol = "❄️ "
+
+[username]
+disabled = false
+format = "[$user ]($style)"
+show_always = true
+style_root = "fg:#101116 bg:#ffadad"
+style_user = "fg:#101116 bg:#ffadad"
