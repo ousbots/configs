@@ -1,18 +1,24 @@
 local wezterm = require "wezterm";
 
--- Keybindings:
-local keys = {}
-
--- Show a confirmation prompt when closing a tab.
-table.insert(keys, {
-  key = "w",
-  mods = "SUPER",
-  action = wezterm.action.CloseCurrentTab{ confirm = true },
-})
-
--- Configuration:
 config = {
-  keys = keys,
+  -- Keybindings:
+  keys = {
+    -- Show a confirmation prompt when closing a tab.
+    {
+      key = "q",
+      mods = "CMD",
+      action = wezterm.action.CloseCurrentTab{ confirm = true },
+    },
+    {
+      key = "w",
+      mods = "CMD",
+      action = wezterm.action.CloseCurrentTab{ confirm = true },
+    },
+  },
+
+  -- Always prompt when closing a window.
+  skip_close_confirmation_for_processes_named = {},
+  window_close_confirmation = "AlwaysPrompt",
 
   -- Fonts.
   -- font = wezterm.font("Monaspace Neon"),
