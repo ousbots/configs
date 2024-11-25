@@ -7,7 +7,7 @@ status is-interactive; and begin
     alias find fd
 
     # Environment variables
-    #set RIPGREP_CONFIG_PATH $HOME/.config/ripgreprc
+    set RIPGREP_CONFIG_PATH $HOME/.config/ripgrep.config
 
     # Rust: $HOME/.cargo/bin
     if test -d $HOME/.cargo/bin
