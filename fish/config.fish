@@ -25,7 +25,7 @@ status is-interactive; and begin
     fish_vi_key_bindings
 
     # starship
-    eval (starship init fish)
+    starship init fish | source
 
     # editor
     set EDITOR hx
