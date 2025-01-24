@@ -6,3 +6,5 @@ window-padding-x = 6
 window-padding-y = 4
 window-padding-balance = true
 window-colorspace = display-p3
+
+keybind = global:cmd+grave_accent=toggle_quick_terminal
