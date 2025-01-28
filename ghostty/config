@@ -20,5 +20,5 @@ confirm-close-surface = always
 quit-after-last-window-closed = true
 
 keybind = global:cmd+grave_accent=toggle_quick_terminal
-keybind = page_up=scroll_page_up
-keybind = page_down=scroll_page_down
+keybind = shift+page_up=scroll_page_up
+keybind = shift+page_down=scroll_page_down
