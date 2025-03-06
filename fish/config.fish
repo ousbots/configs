@@ -7,7 +7,9 @@ status is-interactive; and begin
     alias find fd
 
     # Environment variables
-    set RIPGREP_CONFIG_PATH $HOME/.config/ripgrep.config
+    if test -d $HOME/.config/ripgrep.config
+        set RIPGREP_CONFIG_PATH $HOME/.config/ripgrep.config
+    end
 
     # Rust: $HOME/.cargo/bin
     if test -d $HOME/.cargo/bin
@@ -25,7 +27,7 @@ status is-interactive; and begin
     fish_vi_key_bindings
 
     # starship
-    starship init fish | source
+    eval (starship init fish)
 
     # editor
     set EDITOR hx
