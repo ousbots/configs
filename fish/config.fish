@@ -6,18 +6,18 @@ status is-interactive; and begin
     alias cat bat
     alias find fd
 
-    # Environment variables
+    # Ripgrep configuration variable.
     if test -d $HOME/.config/ripgrep.config
         set RIPGREP_CONFIG_PATH $HOME/.config/ripgrep.config
     end
 
-    # Rust: $HOME/.cargo/bin
+    # Rust add path $HOME/.cargo/bin
     if test -d $HOME/.cargo/bin
         contains $HOME/.cargo/bin $PATH
         or set PATH $HOME/.cargo/bin $PATH
     end
 
-    # Go: $HOME/go/bin
+    # Go add path $HOME/go/bin
     if test -d $HOME/go/bin
         contains $HOME/go/bin $PATH
         or set PATH $HOME/go/bin $PATH
