@@ -73,10 +73,6 @@
       # Allow packages with non-free licenses.
       nixpkgs.config.allowUnfree = true;
 
-      # Use a custom flake.nix location.
-      # > darwin-rebuild switch -I darwin-config=$HOME/.config/darwin/flake.nix
-      # environment.darwinConfig = "$HOME/.config/darwin/flake.nix";
-
       # Necessary for using flakes on this system.
       nix.settings.experimental-features = "nix-command flakes";
 
@@ -92,11 +88,6 @@
 
       # The platform the configuration will be used on.
       nixpkgs.hostPlatform = "aarch64-darwin";
-
-      # DEV: Set development domains on localhost.
-      networking.hosts = {
-        "127.0.0.1" = ["dev.local" "pgstats.dev.local" "stats.dev.local"];
-      };
 
       # # HACK: Use custom launchd for Ollama
       # # Currently not available for nix-darin
@@ -114,11 +105,6 @@
       #     };
       #   };
       # };
-
-      # HACK: add the ghostty shell integration scripts to XDG_DATA_DIRS.
-      environment.variables = {
-        XDG_DATA_DIRS = ["/Applications/Ghostty.app/Contents/Resources/ghostty/shell-integration"];
-      };
     };
   in
   {
