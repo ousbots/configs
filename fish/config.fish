@@ -6,18 +6,19 @@ status is-interactive; and begin
     alias cat bat
     alias find fd
 
-    # Ripgrep configuration variable.
+    # Environment variables
     if test -d $HOME/.config/ripgrep.config
-        set RIPGREP_CONFIG_PATH $HOME/.config/ripgrep.config
+        contains $HOME/.config/ripgrep.config $RIPGREP_CONFIG_PATH
+        or set RIPGREP_CONFIG_PATH $HOME/.config/ripgrep.config
     end
 
-    # Rust add path $HOME/.cargo/bin
+    # Rust: $HOME/.cargo/bin
     if test -d $HOME/.cargo/bin
         contains $HOME/.cargo/bin $PATH
         or set PATH $HOME/.cargo/bin $PATH
     end
 
-    # Go add path $HOME/go/bin
+    # Go: $HOME/go/bin
     if test -d $HOME/go/bin
         contains $HOME/go/bin $PATH
         or set PATH $HOME/go/bin $PATH
@@ -32,3 +33,7 @@ status is-interactive; and begin
     # editor
     set EDITOR hx
 end
+
+# Added by OrbStack: command-line tools and integration
+# This won't be added again if you remove it.
+source ~/.orbstack/shell/init2.fish 2>/dev/null || :
