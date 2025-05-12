@@ -2,7 +2,7 @@
   description = "Laptop flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-darwin.url = "github:LnL7/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
   };
@@ -22,17 +22,18 @@
         pkgs.aspellDicts.en-science
         pkgs.audacity
         pkgs.bat
-        pkgs.colima
+        #pkgs.colima
         pkgs.coreutils
         pkgs.delta
         pkgs.delve
         pkgs.difftastic
-        pkgs.docker-client
+        #pkgs.docker-client
         pkgs.duf
         pkgs.eza
         pkgs.fd
         pkgs.fish
         pkgs.ffmpeg
+        pkgs.flow-control
         # pkgs.ghostty
         pkgs.glow
         pkgs.gnupg
@@ -41,17 +42,19 @@
         pkgs.golangci-lint
         pkgs.gopls
         pkgs.gosec
-        #pkgs.govulncheck
-        #pkgs.go-tools
+        pkgs.govulncheck
+        pkgs.go-tools
         pkgs.graphviz
         pkgs.helix
         pkgs.htop
         pkgs.httpie
+        pkgs.imagemagick
         pkgs.jujutsu
         pkgs.just
         pkgs.k6
         pkgs.mtr
-        pkgs.nodejs_23
+        pkgs.nodejs_24
+        pkgs.nvd
         pkgs.ollama
         pkgs.pgcli
         pkgs.pspg
@@ -61,12 +64,14 @@
         pkgs.sd
         pkgs.sleek
         pkgs.sqlcheck
+        pkgs.sqlfluff
         pkgs.sqruff
         pkgs.starship
         pkgs.swift-format
         pkgs.tokei
         pkgs.unrar
         pkgs.yt-dlp
+        pkgs.zig
         pkgs.zoxide
       ];
 
