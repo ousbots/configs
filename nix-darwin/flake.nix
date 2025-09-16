@@ -16,6 +16,7 @@
         # Attribute overriding example: [
         # (pkgs.nodejs_23.overrideAttrs (old: { version = "23.6.0"; }))
         # pkgs.angle-grinder
+        pkgs.asciinema
         pkgs.aspell
         pkgs.aspellDicts.en
         pkgs.aspellDicts.en-computers
@@ -40,6 +41,8 @@
         pkgs.go_1_24
         pkgs.golangci-lint-langserver
         pkgs.golangci-lint
+        pkgs.golines
+        pkgs.gofumpt
         pkgs.gopls
         pkgs.gosec
         pkgs.govulncheck
@@ -57,7 +60,7 @@
         pkgs.nvd
         pkgs.ollama
         pkgs.pgcli
-        pkgs.pspg
+        # pkgs.pspg
         pkgs.ripgrep
         pkgs.rustup
         pkgs.rsync
@@ -69,6 +72,7 @@
         pkgs.starship
         pkgs.swift-format
         pkgs.tokei
+        pkgs.typescript-language-server
         pkgs.unrar
         pkgs.yt-dlp
         pkgs.zig
@@ -77,6 +81,9 @@
 
       # Allow packages with non-free licenses.
       nixpkgs.config.allowUnfree = true;
+
+      # Allow packages marked as broken.
+      # nixpkgs.config.allowBroken = true;
 
       # Necessary for using flakes on this system.
       nix.settings.experimental-features = "nix-command flakes";
