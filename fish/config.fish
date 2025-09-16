@@ -24,6 +24,12 @@ status is-interactive; and begin
         or set PATH $HOME/go/bin $PATH
     end
 
+    # Node: $HOME/.npm-global/bin
+    if test -d $HOME/.npm-global/bin
+        contains $HOME/.npm-global/bin $PATH
+        or set PATH $HOME/.npm-global/bin $PATH
+    end
+
     # Enable vi mode
     fish_vi_key_bindings
 
