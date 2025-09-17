@@ -4,6 +4,9 @@ theme = "catppuccin_mocha"
 [editor]
 auto-completion = false
 auto-pairs = false
+bufferline = "multiple"
+color-modes = true
+continue-comments = false
 mouse = false
 text-width = 120
 
@@ -13,12 +16,18 @@ other-lines = "error"
 
 [editor.lsp]
 auto-signature-help = true
+display-inlay-hints = true
+display-messages = true
 display-signature-help-docs = true
-display-inlay-hints = false
-display-messages = false
 
 [editor.soft-wrap]
 enable = true
+
+[editor.statusline]
+center = ["primary-selection-length"]
+
+[editor.whitespace]
+render = "all"
 
 [keys.insert]
 C-k = "completion"
