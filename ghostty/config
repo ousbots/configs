@@ -1,5 +1,7 @@
 font-family = Iosevka Term
 font-size = 18
+# font-thicken = true
+# adjust-cell-width = "-5%"
 
 theme = catppuccin-mocha
 #background = #101110
@@ -25,3 +27,5 @@ quit-after-last-window-closed = true
 keybind = global:ctrl+grave_accent=toggle_quick_terminal
 keybind = shift+page_up=scroll_page_up
 keybind = shift+page_down=scroll_page_down
+keybind = shift+super+left=move_tab:-1
+keybind = shift+super+right=move_tab:1
