@@ -1,5 +1,6 @@
 #theme = "catppuccin_latte"
-theme = "catppuccin_mocha"
+#theme = "catppuccin_mocha"
+theme = "catppuccin_dark"
 
 [editor]
 auto-completion = false
@@ -11,12 +12,12 @@ mouse = false
 text-width = 120
 
 [editor.inline-diagnostics]
-cursor-line = "hint"
-other-lines = "error"
+#cursor-line = "disable"
+#other-lines = "error"
 
 [editor.lsp]
 auto-signature-help = true
-display-inlay-hints = true
+display-inlay-hints = false
 display-messages = true
 display-signature-help-docs = true
 
@@ -27,7 +28,7 @@ enable = true
 center = ["primary-selection-length"]
 
 [editor.whitespace]
-render = "all"
+render = "none"
 
 [keys.insert]
 C-k = "completion"
